@@ -3,9 +3,11 @@ import { PlayCanvasCompressedPlyParser } from './loaders/ply/PlayCanvasCompresse
 import { PlyLoader } from './loaders/ply/PlyLoader.js';
 import { SplatLoader } from './loaders/splat/SplatLoader.js';
 import { KSplatLoader } from './loaders/ksplat/KSplatLoader.js';
+import { SpzLoader } from './loaders/spz/SpzLoader.js';
 import * as LoaderUtils from './loaders/Utils.js';
 import { SplatBuffer } from './loaders/SplatBuffer.js';
 import { SplatParser } from './loaders/splat/SplatParser.js';
+import { SpzParser } from './loaders/spz/SpzParser.js';
 import { SplatPartitioner } from './loaders/SplatPartitioner.js';
 import { SplatBufferGenerator } from './loaders/SplatBufferGenerator.js';
 import { Viewer } from './Viewer.js';
@@ -25,9 +27,11 @@ export {
     PlyLoader,
     SplatLoader,
     KSplatLoader,
+    SpzLoader,
     LoaderUtils,
     SplatBuffer,
     SplatParser,
+    SpzParser,
     SplatPartitioner,
     SplatBufferGenerator,
     Viewer,

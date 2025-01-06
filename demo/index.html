@@ -275,7 +275,8 @@
     {
         "imports": {
             "three": "./lib/three.module.js",
-            "gaussian-splats-3d": "./lib/gaussian-splats-3d.module.js"
+            "gaussian-splats-3d": "./lib/gaussian-splats-3d.module.js",
+            "@spz-loader/core": "./lib/spz.module.js"
         }
     }
   </script>
@@ -293,7 +294,10 @@
     import * as THREE from 'three';
 
     function fileBufferToSplatBuffer(fileBufferData, format, alphaRemovalThreshold, compressionLevel, sectionSize, sceneCenter, blockSize, bucketSize, outSphericalHarmonicsDegree = 0) {
-      if (format === GaussianSplats3D.SceneFormat.Ply) {
+      if(format === GaussianSplats3D.SceneFormat.Spz) {
+        return GaussianSplats3D.SpzLoader.loadFromFileData(fileBufferData.data, alphaRemovalThreshold, compressionLevel, true, outSphericalHarmonicsDegree, sectionSize, sceneCenter, blockSize, bucketSize);
+      } else {
+        if (format === GaussianSplats3D.SceneFormat.Ply) {
         return GaussianSplats3D.PlyLoader.loadFromFileData(fileBufferData.data, alphaRemovalThreshold, compressionLevel, true, outSphericalHarmonicsDegree, sectionSize, sceneCenter, blockSize, bucketSize);
       } else {
         if (format === GaussianSplats3D.SceneFormat.Splat) {
@@ -301,6 +305,7 @@
         } else {
           return GaussianSplats3D.KSplatLoader.loadFromFileData(fileBufferData.data);
         }
+      }
       }
     }
 
@@ -574,7 +579,8 @@
         'sphericalHarmonicsDegree': sphericalHarmonicsDegree
       };
       const splatBufferOptions = {
-        'splatAlphaRemovalThreshold': alphaRemovalThreshold
+        'splatAlphaRemovalThreshold': alphaRemovalThreshold,
+        rotation: format === GaussianSplats3D.SceneFormat.Spz ? [1, 0, 0, 0] : [0, 0, 0, 0],
       };
       const splatBufferPromise = fileBufferToSplatBuffer({data: splatBufferData}, format, alphaRemovalThreshold, 0,
                                                           undefined, undefined, undefined, undefined, sphericalHarmonicsDegree);
@@ -587,6 +593,16 @@
         .then(() => {
             viewer.start();
         });
+        // viewer.addSplatScene('http://localhost:3000/proxy?url=https://file.io/LrZSZjtqIx8i.spz', {
+        //     // 'splatAlphaRemovalThreshold': 5,
+        //     'showLoadingUI': true,
+        //     rotation: [1, 0, 0, 0],
+        //     // progressiveLoad: true,
+        // })
+        // .then(() => {
+        //   console.log("viewer start");
+        //     viewer.start();
+        // });
       });
     }
 

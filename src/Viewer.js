@@ -25,6 +25,7 @@ import { RenderMode } from './RenderMode.js';
 import { LogLevel } from './LogLevel.js';
 import { SceneRevealMode } from './SceneRevealMode.js';
 import { SplatRenderMode } from './SplatRenderMode.js';
+import { SpzLoader } from './loaders/spz/SpzLoader.js';
 
 const THREE_CAMERA_FOV = 50;
 const MINIMUM_DISTANCE_TO_NEW_FOCAL_POINT = .75;
@@ -1073,6 +1074,9 @@ export class Viewer {
             } else if (format === SceneFormat.Ply) {
                 return PlyLoader.loadFromURL(path, onProgress, progressiveBuild, onSectionBuilt, splatAlphaRemovalThreshold,
                                              this.inMemoryCompressionLevel, optimizeSplatData, this.sphericalHarmonicsDegree, headers);
+            } else if (format === SceneFormat.Spz) {
+                return SpzLoader.loadFromURL(path, onProgress, false, onSectionBuilt, splatAlphaRemovalThreshold,
+                    this.inMemoryCompressionLevel, optimizeSplatData, this.sphericalHarmonicsDegree, headers);
             }
         } catch (e) {
             if (e instanceof DirectLoadError) {

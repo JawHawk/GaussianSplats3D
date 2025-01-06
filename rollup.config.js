@@ -1,8 +1,10 @@
+import nodeResolve from "@rollup/plugin-node-resolve";
 import { base64 } from "./util/import-base-64.js";
 import terser from '@rollup/plugin-terser';
 
 const globals = {
-    'three': 'THREE'
+    'three': 'THREE',
+    '@spz-loader/core': '@spz-loader/core'
 };
 
 export default [
@@ -10,7 +12,8 @@ export default [
         input: './src/index.js',
         treeshake: false,
         external: [
-            'three'
+            'three',
+            '@spz-loader/core'
         ],
         output: [
             {
@@ -39,7 +42,8 @@ export default [
         input: './src/index.js',
         treeshake: false,
         external: [
-            'three'
+            'three',
+            '@spz-loader/core'
         ],
         output: [
             {
@@ -60,7 +64,8 @@ export default [
             base64({ 
                 include: "**/*.wasm",
                 sourceMap: false
-            })
+            }),
+            nodeResolve()
         ]
     }
 ];

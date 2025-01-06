@@ -12,7 +12,7 @@
     "license": "MIT",
     "type": "module",
     "scripts": {
-        "build-demo": "mkdir -p ./build/demo && cp -r ./demo ./build/ && cp ./node_modules/three/build/three.module.js ./build/demo/lib/three.module.js",
+        "build-demo": "mkdir -p ./build/demo && cp -r ./demo ./build/ && cp ./node_modules/three/build/three.module.js ./build/demo/lib/three.module.js && cp ./node_modules/@spz-loader/core/dist/index.js ./build/demo/lib/spz.module.js",
         "build-library": "npx rollup -c && mkdir -p ./build/demo/lib && cp ./build/gaussian-splats-3d.module.* ./build/demo/lib/",
         "build": "npm run build-library && npm run build-demo",
         "build-demo-windows": "(if not exist \".\\build\\demo\" mkdir .\\build\\demo) && xcopy /E .\\demo .\\build\\demo && xcopy .\\node_modules\\three\\build\\three.module.js .\\build\\demo\\lib\\",
@@ -23,7 +23,8 @@
         "fix-styling": "npx stylelint **/*.scss --fix",
         "fix-js": "npx eslint src --fix",
         "lint": "npx eslint 'src/**/*.js' || true",
-        "prettify": "npx prettier --write 'src/**/*.js'"
+        "prettify": "npx prettier --write 'src/**/*.js'",
+        "copy-libs": "cp node_modules/@spz-loader/core/dist/spz-loader-core.js demo/lib/ && cp node_modules/@spz-loader/core/dist/spz-loader-core.js.map demo/lib/"
     },
     "watch": {
         "build-library": {
@@ -53,9 +54,10 @@
         "@babel/eslint-parser": "7.22.11",
         "@babel/plugin-proposal-class-properties": "7.18.6",
         "@babel/preset-env": "7.22.10",
-        "babel-loader": "9.1.3",
+        "@rollup/plugin-node-resolve": "^16.0.0",
         "@rollup/plugin-terser": "0.4.4",
         "@rollup/pluginutils": "5.0.5",
+        "babel-loader": "9.1.3",
         "eslint": "8.47.0",
         "eslint-config-google": "0.14.0",
         "file-loader": "6.2.0",
@@ -67,6 +69,7 @@
         "url-loader": "4.1.1"
     },
     "peerDependencies": {
+        "@spz-loader/core": "^0.1.0",
         "three": ">=0.160.0"
     },
     "files": [
@@ -74,5 +77,8 @@
         "build/gaussian-splats-3d.umd.cjs.map",
         "build/gaussian-splats-3d.module.js",
         "build/gaussian-splats-3d.module.js.map"
-    ]
+    ],
+    "dependencies": {
+        "spz-js": "^1.2.0"
+    }
 }
